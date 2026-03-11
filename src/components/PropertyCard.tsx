@@ -24,7 +24,7 @@ const PropertyCard = ({ property }: PropertyCardProps) => {
                 }`}
         >
             {/* Image Container */}
-            <div className="relative h-72 overflow-hidden">
+            <div className="relative h-60 md:h-72 overflow-hidden">
                 <img
                     src={property.image}
                     alt={property.title}

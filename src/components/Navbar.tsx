@@ -38,10 +38,10 @@ const Navbar = () => {
                             <Building2 className="w-5 h-5 text-accent" strokeWidth={1} />
                         </div>
                         <div className="flex flex-col">
-                            <span className="text-xl font-sans font-black tracking-[-0.02em] leading-none text-text-primary">
-                                BANGKOK LINK
+                            <span className="text-lg md:text-xl font-sans font-black tracking-[-0.02em] leading-none text-text-primary uppercase">
+                                Bangkok Link
                             </span>
-                            <span className="text-[10px] font-sans font-bold uppercase tracking-[0.4em] text-accent mt-1 opacity-80">
+                            <span className="text-[9px] md:text-[10px] font-sans font-bold uppercase tracking-[0.3em] text-accent mt-0.5 opacity-80">
                                 Luxury Real Estate
                             </span>
                         </div>
@@ -101,7 +101,7 @@ const Navbar = () => {
                     ))}
                     <button
                         onClick={() => scrollToSection('contact')}
-                        className="w-full bg-primary text-white p-4 rounded-xl font-bold text-[10px] uppercase tracking-[0.25em] flex items-center justify-center gap-2"
+                        className="w-full bg-primary text-white p-5 rounded-2xl font-black text-[11px] uppercase tracking-[0.3em] flex items-center justify-center gap-2.5 shadow-button active:scale-[0.98] transition-all"
                     >
                         Contact Us
                         <ArrowUpRight className="w-4 h-4" />
