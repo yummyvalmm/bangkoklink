@@ -75,14 +75,14 @@ const QuickSearch = ({ onSearch }: QuickSearchProps) => {
                     <div className="flex-1 px-4 py-2 flex flex-col justify-center gap-1 group/input">
                         <span className="text-[9px] font-bold uppercase tracking-[0.2em] text-accent opacity-70">Price Range</span>
                         <div className="flex items-center gap-3">
-                            <DollarSign className="w-4 h-4 text-primary opacity-40 group-hover/input:opacity-100 transition-opacity" strokeWidth={1.5} />
+                            <DollarSign className="w-4 h-4 text-primary opacity-60 group-hover/input:opacity-100 transition-opacity" strokeWidth={1.5} />
                             <select
                                 value={`${priceRange.min}-${priceRange.max}`}
                                 onChange={(e) => {
                                     const [min, max] = e.target.value.split('-').map(Number);
                                     setPriceRange({ min, max });
                                 }}
-                                className="w-full bg-transparent text-sm font-medium text-text-primary outline-none cursor-pointer appearance-none"
+                                className="w-full bg-transparent text-sm font-semibold text-text-primary outline-none cursor-pointer appearance-none"
                             >
                                 {listingType === 'rent' ? (
                                     <>
