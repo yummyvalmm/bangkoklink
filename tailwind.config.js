@@ -35,7 +35,7 @@ export default {
                 },
             },
             fontFamily: {
-                display: ['Cormorant Garamond', 'serif'],
+                display: ['Outfit', 'sans-serif'],
                 sans: ['Outfit', 'system-ui', 'sans-serif'],
             },
             boxShadow: {
