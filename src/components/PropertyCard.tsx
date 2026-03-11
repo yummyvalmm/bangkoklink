@@ -64,17 +64,17 @@ const PropertyCard = ({ property }: PropertyCardProps) => {
             <div className="p-8 space-y-5">
                 {/* Title & Location */}
                 <div>
-                    <h3 className="text-2xl font-display font-medium tracking-tight mb-2 text-text-primary group-hover:text-primary transition-colors">
+                    <h3 className="text-2xl font-sans font-bold tracking-tight mb-2 text-text-primary group-hover:text-primary transition-colors">
                         {property.title}
                     </h3>
-                    <p className="text-text-secondary text-sm font-light flex items-center gap-1.5 tracking-wide">
-                        <span className="w-1 h-1 bg-accent rounded-full"></span>
+                    <p className="text-text-secondary text-[10px] font-bold uppercase tracking-[0.2em] flex items-center gap-2 opacity-60">
+                        <MapPin className="w-3 h-3" strokeWidth={2.5} />
                         {property.location}
                     </p>
                 </div>
 
                 {/* Price */}
-                <div className="text-3xl font-light text-primary font-sans tracking-tight">{property.price}</div>
+                <div className="text-3xl font-black text-primary font-sans tracking-[-0.03em]">{property.price}</div>
 
                 {/* Features */}
                 <div className="flex items-center gap-6 pt-6 border-t border-border-light/60">

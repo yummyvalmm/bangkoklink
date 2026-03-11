@@ -17,10 +17,10 @@ const FinalCTA = () => {
             </div>
 
             <div className="max-w-5xl mx-auto px-6 text-center relative z-10">
-                <h2 className="text-5xl lg:text-7xl font-display font-semibold mb-8 text-text-primary tracking-tight">
-                    Ready to Find Your <span className="text-primary italic">Dream Home?</span>
+                <h2 className="text-5xl lg:text-7xl font-sans font-black mb-8 text-text-primary tracking-[-0.04em] leading-[0.95] uppercase">
+                    Ready to Find Your <span className="text-primary">Dream Home?</span>
                 </h2>
-                <p className="text-xl text-text-secondary mb-12 max-w-2xl mx-auto">
+                <p className="text-lg text-text-secondary mb-12 max-w-2xl mx-auto font-medium tracking-wide">
                     Schedule a free consultation today and let our expert agents help you discover the perfect property that matches your lifestyle and budget.
                 </p>
 
