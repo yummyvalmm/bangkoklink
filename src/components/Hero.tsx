@@ -15,8 +15,10 @@ const Hero = () => {
                             <span className="inline-block text-accent-rich text-[10px] md:text-xs font-bold tracking-[0.3em] uppercase mb-6 animate-fade-in [animation-delay:200ms]">
                                 Premium Real Estate
                             </span>
-                            <h1 className="text-5xl md:text-6xl lg:text-7xl font-display font-light text-text-primary leading-[1.1] tracking-tight mb-8 animate-fade-in [animation-delay:400ms]">
-                                Find Your <span className="italic font-light">Perfect Home</span> In Bangkok
+                            <h1 className="text-6xl md:text-7xl lg:text-8xl font-sans font-black text-text-primary leading-[0.95] tracking-[-0.04em] mb-10 animate-fade-in [animation-delay:400ms]">
+                                FIND YOUR <br />
+                                PERFECT HOME <br />
+                                IN BANGKOK
                             </h1>
                             <p className="text-xl md:text-2xl text-text-secondary max-w-2xl font-light leading-relaxed mb-12 animate-fade-in [animation-delay:600ms]">
                                 Discover exceptional properties in Bangkok that match your lifestyle and exceed your expectations.

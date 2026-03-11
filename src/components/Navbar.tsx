@@ -37,27 +37,27 @@ const Navbar = () => {
                         <div className="w-9 h-9 border border-accent/20 rounded-lg flex items-center justify-center transition-all duration-500 group-hover:border-accent group-hover:bg-accent/5">
                             <Building2 className="w-5 h-5 text-accent" strokeWidth={1} />
                         </div>
-                        <div className="flex flex-col -space-y-1">
-                            <span className="text-xl md:text-2xl font-display font-light tracking-[0.05em] text-primary">
-                                BANGKOK <span className="italic">LINK</span>
+                        <div className="flex flex-col">
+                            <span className="text-xl font-sans font-black tracking-[-0.02em] leading-none text-text-primary">
+                                BANGKOK LINK
                             </span>
-                            <span className="text-[7px] md:text-[8px] font-sans font-bold tracking-[0.4em] text-accent-rich uppercase ml-0.5 opacity-80">
+                            <span className="text-[10px] font-sans font-bold uppercase tracking-[0.4em] text-accent mt-1 opacity-80">
                                 Luxury Real Estate
                             </span>
                         </div>
                     </Link>
 
-                    {/* Desktop Navigation - Elegant Spacing */}
-                    <div className="hidden md:flex items-center gap-10">
-                        {['home', 'properties', 'about', 'agents'].map((item) => (
-                            <button
+                    {/* Desktop Navigation */}
+                    <div className="hidden md:flex items-center gap-12">
+                        {['Services', 'Properties', 'About', 'Contact'].map((item) => (
+                            <Link
                                 key={item}
-                                onClick={() => scrollToSection(item)}
-                                className="text-text-secondary hover:text-primary transition-all font-medium text-[10px] uppercase tracking-[0.25em] relative group/nav outline-none"
+                                to={`#${item.toLowerCase()}`}
+                                className="group/nav relative text-[11px] font-sans font-black uppercase tracking-[0.3em] text-text-primary hover:text-primary transition-colors duration-300"
                             >
                                 {item}
                                 <span className="absolute -bottom-1 left-1/2 w-0 h-[1px] bg-accent transition-all duration-500 group-hover/nav:w-full group-hover/nav:left-0"></span>
-                            </button>
+                            </Link>
                         ))}
                     </div>
 
