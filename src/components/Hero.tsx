@@ -2,7 +2,7 @@ import QuickSearch from './QuickSearch';
 
 const Hero = () => {
     return (
-        <section id="home" className="min-h-screen pt-24 pb-16 relative overflow-hidden bg-background">
+        <section id="home" className="min-h-screen pt-20 pb-8 relative overflow-hidden bg-background">
             {/* Background gradient */}
             <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-transparent pointer-events-none"></div>
 
@@ -11,7 +11,7 @@ const Hero = () => {
                     {/* Left Content */}
                     <div className="lg:col-span-5 space-y-10">
                         {/* Main Heading Content */}
-                        <div className="max-w-4xl pt-[10vh]">
+                        <div className="max-w-4xl pt-4">
                             <span className="inline-block text-accent-rich text-[10px] md:text-xs font-bold tracking-[0.3em] uppercase mb-6 animate-fade-in [animation-delay:200ms]">
                                 Premium Real Estate
                             </span>
@@ -45,7 +45,7 @@ const Hero = () => {
                             </div>
                         </div>
 
-                        <div className="space-y-6 pt-12">
+                        <div className="space-y-6 pt-6">
                             <div className="relative aspect-[3/4] rounded-2xl overflow-hidden group shadow-card">
                                 <img
                                     src="/properties/hero-2.jpg"
