@@ -133,7 +133,7 @@ const Navbar = () => {
                                 }`}
                                 style={{ transitionDelay: isMobileMenuOpen ? `${80 + i * 60}ms` : '0ms' }}
                             >
-                                <span className="block text-5xl font-black uppercase tracking-[-0.03em] text-white/20 group-hover:text-white transition-colors duration-200 leading-tight py-3 border-b border-white/10 group-hover:border-white/30">
+                                <span className="block text-5xl font-black uppercase tracking-[-0.03em] text-white/70 group-hover:text-white active:text-white transition-colors duration-200 leading-tight py-4 border-b border-white/20 group-hover:border-white/50">
                                     {item.label}
                                 </span>
                             </button>
