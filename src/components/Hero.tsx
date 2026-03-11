@@ -7,11 +7,11 @@ const Hero = () => {
             <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-transparent pointer-events-none"></div>
 
             <div className="max-w-7xl mx-auto px-6">
-                <div className="grid lg:grid-cols-12 gap-8 lg:gap-12 items-center">
+                <div className="grid lg:grid-cols-12 gap-8 lg:gap-12 items-start">
                     {/* Left Content */}
                     <div className="lg:col-span-5 space-y-10">
                         {/* Main Heading Content */}
-                        <div className="max-w-4xl pt-4">
+                        <div className="max-w-4xl pt-8">
                             <span className="inline-block text-accent-rich text-[10px] md:text-xs font-bold tracking-[0.3em] uppercase mb-6 animate-fade-in [animation-delay:200ms]">
                                 Premium Real Estate
                             </span>
@@ -29,7 +29,7 @@ const Hero = () => {
                     </div>
 
                     {/* Right Image Grid */}
-                    <div className="lg:col-span-6 lg:col-start-7 grid grid-cols-2 gap-6 relative">
+                    <div className="lg:col-span-6 lg:col-start-7 grid grid-cols-2 gap-6 relative pt-8">
                         <div className="space-y-6">
                             <div className="relative aspect-[4/5] rounded-2xl overflow-hidden group shadow-card">
                                 <img
@@ -45,7 +45,7 @@ const Hero = () => {
                             </div>
                         </div>
 
-                        <div className="space-y-6 pt-6">
+                        <div className="space-y-6 pt-4">
                             <div className="relative aspect-[3/4] rounded-2xl overflow-hidden group shadow-card">
                                 <img
                                     src="/properties/hero-2.jpg"
