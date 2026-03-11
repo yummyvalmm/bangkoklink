@@ -71,7 +71,7 @@ const QuickSearch = ({ onSearch }: QuickSearchProps) => {
                             className={`flex-1 py-4 text-[10px] font-black uppercase tracking-[0.3em] transition-all border-b-2 -mb-px ${
                                 listingType === type
                                     ? 'border-primary text-primary bg-primary/5'
-                                    : 'border-transparent text-text-secondary hover:text-text-primary bg-transparent hover:bg-background-subtle'
+                                    : 'border-transparent text-text-secondary lg:hover:text-text-primary bg-transparent lg:hover:bg-background-subtle'
                             }`}
                         >
                             {type === 'rent' ? 'For Rent' : 'For Sale'}
@@ -107,7 +107,7 @@ const QuickSearch = ({ onSearch }: QuickSearchProps) => {
                                     <button
                                         key={loc}
                                         onMouseDown={() => { setLocation(loc); setShowSuggestions(false); }}
-                                        className="w-full text-left px-4 py-3 text-sm font-medium text-text-secondary hover:bg-background-subtle hover:text-primary transition-colors flex items-center gap-2.5"
+                                        className="w-full text-left px-5 py-4 text-sm font-medium text-text-secondary lg:hover:bg-background-subtle lg:hover:text-primary transition-colors flex items-center gap-2.5 active:bg-background-subtle"
                                     >
                                         <MapPin className="w-3.5 h-3.5 text-accent opacity-60 shrink-0" strokeWidth={2} />
                                         {loc}
@@ -127,7 +127,7 @@ const QuickSearch = ({ onSearch }: QuickSearchProps) => {
                             <select
                                 value={propertyType}
                                 onChange={(e) => setPropertyType(e.target.value)}
-                                className="w-full bg-background-subtle border border-border rounded-xl px-4 py-3 pr-10 text-sm font-semibold text-text-primary outline-none cursor-pointer appearance-none focus:border-primary focus:bg-white focus:ring-2 focus:ring-primary/10 transition-all hover:border-primary/40"
+                                className="w-full bg-background-subtle border border-border rounded-xl px-4 py-3.5 md:py-3 pr-10 text-sm font-semibold text-text-primary outline-none cursor-pointer appearance-none focus:border-primary focus:bg-white focus:ring-2 focus:ring-primary/10 transition-all lg:hover:border-primary/40 active:border-primary/40"
                             >
                                 {PROPERTY_TYPES.map((t) => (
                                     <option key={t} value={t}>{t}</option>
@@ -147,7 +147,7 @@ const QuickSearch = ({ onSearch }: QuickSearchProps) => {
                             <select
                                 value={priceRange}
                                 onChange={(e) => setPriceRange(e.target.value)}
-                                className="w-full bg-background-subtle border border-border rounded-xl px-4 py-3 pr-10 text-sm font-semibold text-text-primary outline-none cursor-pointer appearance-none focus:border-primary focus:bg-white focus:ring-2 focus:ring-primary/10 transition-all hover:border-primary/40"
+                                className="w-full bg-background-subtle border border-border rounded-xl px-4 py-3.5 md:py-3 pr-10 text-sm font-semibold text-text-primary outline-none cursor-pointer appearance-none focus:border-primary focus:bg-white focus:ring-2 focus:ring-primary/10 transition-all lg:hover:border-primary/40 active:border-primary/40"
                             >
                                 {PRICE_OPTIONS[listingType].map((opt) => (
                                     <option key={opt.value} value={opt.value}>{opt.label}</option>
@@ -165,7 +165,7 @@ const QuickSearch = ({ onSearch }: QuickSearchProps) => {
                     </p>
                     <button
                         onClick={handleSearch}
-                        className="w-full sm:w-auto bg-primary text-white px-10 py-3.5 rounded-xl font-black text-[10px] uppercase tracking-[0.3em] flex items-center justify-center gap-2.5 hover:bg-primary/90 active:scale-[0.98] transition-all shadow-button"
+                        className="w-full sm:w-auto bg-primary text-white px-10 py-4 rounded-xl font-black text-[10px] uppercase tracking-[0.3em] flex items-center justify-center gap-2.5 lg:hover:bg-primary/90 active:scale-[0.98] transition-all shadow-button"
                     >
                         <Search className="w-3.5 h-3.5" strokeWidth={3} />
                         Search Properties

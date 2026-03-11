@@ -18,8 +18,8 @@ const PropertyCard = ({ property }: PropertyCardProps) => {
     return (
         <Link
             to={`/properties/${property.id}`}
-            className={`group block bg-white rounded-2xl overflow-hidden transition-all duration-500 shadow-card hover:shadow-card-hover border border-border-light/50 hover:border-accent/20 relative ${property.status === 'New Release'
-                ? 'ring-1 ring-accent/10 hover:ring-accent/30'
+            className={`group block bg-white rounded-2xl overflow-hidden transition-all duration-500 shadow-card lg:hover:shadow-card-hover border border-border-light/50 lg:hover:border-accent/20 relative ${property.status === 'New Release'
+                ? 'ring-1 ring-accent/10 lg:hover:ring-accent/30'
                 : ''
                 }`}
         >
@@ -28,7 +28,7 @@ const PropertyCard = ({ property }: PropertyCardProps) => {
                 <img
                     src={property.image}
                     alt={property.title}
-                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-1000"
+                    className="w-full h-full object-cover lg:group-hover:scale-105 transition-transform duration-1000"
                 />
 
                 {/* Status Badge & Save Button */}
@@ -44,7 +44,7 @@ const PropertyCard = ({ property }: PropertyCardProps) => {
                         onClick={handleSave}
                         className={`p-2.5 rounded-full backdrop-blur-md shadow-md transition-all duration-300 hover:scale-110 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-transparent ${isSaved
                             ? 'bg-white text-rose-500'
-                            : 'bg-white/70 text-text-primary hover:bg-white'
+                            : 'bg-white/70 text-text-primary lg:hover:bg-white active:bg-white'
                             }`}
                         aria-label={isSaved ? "Remove from saved properties" : "Save property"}
                     >
@@ -52,9 +52,9 @@ const PropertyCard = ({ property }: PropertyCardProps) => {
                     </button>
                 </div>
 
-                {/* Hover Overlay */}
-                <div className="absolute inset-0 bg-primary/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-center justify-center">
-                    <span className="bg-white text-primary px-6 py-2.5 rounded-full text-sm font-bold shadow-xl translate-y-4 group-hover:translate-y-0 transition-transform duration-500">
+                {/* Hover Overlay - Always visible on mobile, hover on desktop */}
+                <div className="absolute inset-0 bg-gradient-to-t from-primary/60 via-primary/20 to-transparent lg:bg-primary/20 opacity-100 lg:opacity-0 lg:group-hover:opacity-100 transition-opacity duration-500 flex items-end lg:items-center justify-center pb-6 lg:pb-0 pointer-events-none">
+                    <span className="bg-white/95 backdrop-blur-md text-primary px-6 py-2.5 rounded-full text-sm font-bold shadow-xl lg:translate-y-4 lg:group-hover:translate-y-0 transition-transform duration-500 border border-white/20">
                         View Details
                     </span>
                 </div>
@@ -64,7 +64,7 @@ const PropertyCard = ({ property }: PropertyCardProps) => {
             <div className="p-8 space-y-5">
                 {/* Title & Location */}
                 <div>
-                    <h3 className="text-2xl font-sans font-bold tracking-tight mb-2 text-text-primary group-hover:text-primary transition-colors">
+                    <h3 className="text-2xl font-sans font-bold tracking-tight mb-2 text-text-primary lg:group-hover:text-primary transition-colors">
                         {property.title}
                     </h3>
                     <p className="text-text-secondary text-[10px] font-bold uppercase tracking-[0.2em] flex items-center gap-2 opacity-60">
