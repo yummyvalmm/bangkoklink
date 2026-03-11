@@ -95,7 +95,7 @@ const Navbar = () => {
 
                         {/* Mobile Hamburger */}
                         <button
-                            className="md:hidden relative z-[60] p-2 rounded-full transition-colors"
+                            className="md:hidden relative z-[60] w-11 h-11 flex items-center justify-center rounded-full transition-colors bg-black/10 active:bg-black/20"
                             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
                             aria-label="Toggle menu"
                         >
@@ -120,6 +120,18 @@ const Navbar = () => {
                 {/* Decorative blobs */}
                 <div className="absolute top-0 right-0 w-80 h-80 bg-primary/20 rounded-full blur-[100px] -mr-20 -mt-20 pointer-events-none" />
                 <div className="absolute bottom-0 left-0 w-60 h-60 bg-accent/10 rounded-full blur-[80px] -ml-10 -mb-10 pointer-events-none" />
+
+                {/* Close Button inside overlay */}
+                <div className="absolute top-5 right-5 z-20">
+                    <button
+                        onClick={() => setIsMobileMenuOpen(false)}
+                        className="flex items-center gap-2 bg-white/10 hover:bg-white/20 active:bg-white/25 backdrop-blur-sm border border-white/20 rounded-full px-4 py-2.5 transition-all"
+                        aria-label="Close menu"
+                    >
+                        <X className="w-4 h-4 text-white" strokeWidth={2.5} />
+                        <span className="text-white text-[10px] font-black uppercase tracking-[0.25em]">Close</span>
+                    </button>
+                </div>
 
                 {/* Nav Links */}
                 <div className="flex flex-col justify-center flex-1 px-8 pt-24 pb-10 relative z-10">
