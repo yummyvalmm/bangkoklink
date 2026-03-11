@@ -22,10 +22,6 @@ const Hero = () => {
                                 Discover exceptional properties in Bangkok that match your lifestyle and exceed your expectations.
                             </p>
                         </div>
-                        {/* Quick Search Component */}
-                        <div className="pt-6">
-                            <QuickSearch />
-                        </div>
                     </div>
 
                     {/* Right Image Grid */}
@@ -63,6 +59,11 @@ const Hero = () => {
                         {/* Decorative element */}
                         <div className="absolute -bottom-10 -left-10 w-40 h-40 bg-accent/10 rounded-full blur-3xl -z-10"></div>
                     </div>
+                </div>
+
+                {/* Quick Search - Repositioned to fill whitespace */}
+                <div className="mt-20 animate-fade-in [animation-delay:800ms]">
+                    <QuickSearch />
                 </div>
 
                 {/* Category Slider - Refined */}
