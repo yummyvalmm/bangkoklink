@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Search, MapPin, DollarSign, ArrowRight } from 'lucide-react';
+import { Search, MapPin, BedDouble, Banknote } from 'lucide-react';
 
 interface QuickSearchProps {
     onSearch?: (filters: SearchFilters) => void;
@@ -8,18 +8,53 @@ interface QuickSearchProps {
 interface SearchFilters {
     location: string;
     listingType: 'rent' | 'buy';
-    priceRange: { min: number; max: number };
+    propertyType: string;
+    priceRange: string;
 }
+
+const LOCATIONS = [
+    'Sukhumvit', 'Silom', 'Sathorn', 'Thonglor', 'Ekkamai',
+    'Asoke', 'Phrom Phong', 'Ratchada', 'Lumpini', 'Riverside'
+];
+
+const PROPERTY_TYPES = ['Any Type', 'Condo', 'Villa', 'Apartment', 'Townhouse', 'Penthouse'];
+
+const PRICE_OPTIONS = {
+    rent: [
+        { label: 'Any Price', value: 'any' },
+        { label: 'Under ฿20k/mo', value: '0-20000' },
+        { label: '฿20k – ฿40k/mo', value: '20000-40000' },
+        { label: '฿40k – ฿80k/mo', value: '40000-80000' },
+        { label: '฿80k+/mo', value: '80000-999999' },
+    ],
+    buy: [
+        { label: 'Any Price', value: 'any' },
+        { label: 'Under ฿3M', value: '0-3000000' },
+        { label: '฿3M – ฿8M', value: '3000000-8000000' },
+        { label: '฿8M – ฿20M', value: '8000000-20000000' },
+        { label: '฿20M+', value: '20000000-999999999' },
+    ],
+};
 
 const QuickSearch = ({ onSearch }: QuickSearchProps) => {
     const [listingType, setListingType] = useState<'rent' | 'buy'>('rent');
     const [location, setLocation] = useState('');
-    const [priceRange, setPriceRange] = useState({ min: 0, max: 10000 });
+    const [propertyType, setPropertyType] = useState('Any Type');
+    const [priceRange, setPriceRange] = useState('any');
+    const [showSuggestions, setShowSuggestions] = useState(false);
+
+    const filteredLocations = LOCATIONS.filter(l =>
+        l.toLowerCase().includes(location.toLowerCase()) && location.length > 0
+    );
 
     const handleSearch = () => {
         if (onSearch) {
-            onSearch({ location, listingType, priceRange });
+            const [min, max] = priceRange === 'any'
+                ? [0, 999999999]
+                : priceRange.split('-').map(Number);
+            onSearch({ location, listingType, propertyType, priceRange });
         }
+        setShowSuggestions(false);
         const propertiesSection = document.getElementById('properties');
         if (propertiesSection) {
             propertiesSection.scrollIntoView({ behavior: 'smooth' });
@@ -28,105 +63,107 @@ const QuickSearch = ({ onSearch }: QuickSearchProps) => {
 
     return (
         <div className="w-full max-w-6xl mx-auto">
-            <div className="bg-white/80 backdrop-blur-2xl rounded-3xl p-3 border border-border-light shadow-card group/search">
-                <div className="flex flex-col md:flex-row items-stretch gap-2">
-                    {/* Listing Type Toggle - Minimalist */}
-                    <div className="flex p-1 bg-background-subtle rounded-2xl md:w-48">
+            {/* Main Card */}
+            <div className="bg-white rounded-2xl border border-border shadow-card overflow-hidden">
+                {/* Tab Bar */}
+                <div className="flex border-b border-border">
+                    {(['rent', 'buy'] as const).map((type) => (
                         <button
-                            onClick={() => setListingType('rent')}
-                            className={`flex-1 py-3 px-4 rounded-xl text-[10px] font-bold uppercase tracking-widest transition-all ${
-                                listingType === 'rent' ? 'bg-white text-primary shadow-minimal' : 'text-text-secondary hover:text-primary'
+                            key={type}
+                            onClick={() => { setListingType(type); setPriceRange('any'); }}
+                            className={`flex-1 py-4 text-[10px] font-black uppercase tracking-[0.3em] transition-all border-b-2 -mb-px ${
+                                listingType === type
+                                    ? 'border-primary text-primary bg-primary/5'
+                                    : 'border-transparent text-text-secondary hover:text-text-primary bg-transparent'
                             }`}
                         >
-                            Rent
+                            {type === 'rent' ? 'For Rent' : 'For Sale'}
                         </button>
-                        <button
-                            onClick={() => setListingType('buy')}
-                            className={`flex-1 py-3 px-4 rounded-xl text-[10px] font-bold uppercase tracking-widest transition-all ${
-                                listingType === 'buy' ? 'bg-white text-primary shadow-minimal' : 'text-text-secondary hover:text-primary'
-                            }`}
+                    ))}
+                </div>
+
+                {/* Inputs Row */}
+                <div className="grid grid-cols-1 md:grid-cols-3 divide-y md:divide-y-0 md:divide-x divide-border">
+                    {/* Location */}
+                    <div className="relative px-6 py-5">
+                        <div className="flex items-center gap-2 mb-1.5">
+                            <MapPin className="w-3.5 h-3.5 text-primary" strokeWidth={2.5} />
+                            <span className="text-[9px] font-black uppercase tracking-[0.25em] text-text-secondary">Location</span>
+                        </div>
+                        <input
+                            type="text"
+                            value={location}
+                            onChange={(e) => { setLocation(e.target.value); setShowSuggestions(true); }}
+                            onFocus={() => setShowSuggestions(true)}
+                            onBlur={() => setTimeout(() => setShowSuggestions(false), 150)}
+                            placeholder="Search Bangkok area…"
+                            className="w-full bg-transparent text-sm font-semibold text-text-primary placeholder:text-text-muted placeholder:font-normal outline-none"
+                        />
+                        {/* Location Autocomplete */}
+                        {showSuggestions && filteredLocations.length > 0 && (
+                            <div className="absolute left-0 right-0 top-full mt-1 bg-white border border-border rounded-xl shadow-card-hover z-50 overflow-hidden">
+                                {filteredLocations.map((loc) => (
+                                    <button
+                                        key={loc}
+                                        onMouseDown={() => { setLocation(loc); setShowSuggestions(false); }}
+                                        className="w-full text-left px-5 py-3 text-sm font-medium text-text-secondary hover:bg-background-subtle hover:text-primary transition-colors flex items-center gap-2"
+                                    >
+                                        <MapPin className="w-3.5 h-3.5 text-accent opacity-60" strokeWidth={2} />
+                                        {loc}
+                                    </button>
+                                ))}
+                            </div>
+                        )}
+                    </div>
+
+                    {/* Property Type */}
+                    <div className="px-6 py-5">
+                        <div className="flex items-center gap-2 mb-1.5">
+                            <BedDouble className="w-3.5 h-3.5 text-primary" strokeWidth={2.5} />
+                            <span className="text-[9px] font-black uppercase tracking-[0.25em] text-text-secondary">Property Type</span>
+                        </div>
+                        <select
+                            value={propertyType}
+                            onChange={(e) => setPropertyType(e.target.value)}
+                            className="w-full bg-transparent text-sm font-semibold text-text-primary outline-none cursor-pointer appearance-none"
                         >
-                            Buy
-                        </button>
+                            {PROPERTY_TYPES.map((t) => (
+                                <option key={t} value={t}>{t}</option>
+                            ))}
+                        </select>
                     </div>
 
-                    {/* Horizontal Divider - Desktop Only */}
-                    <div className="hidden md:block w-px bg-border-light my-2"></div>
-
-                    {/* Location Selection */}
-                    <div className="flex-1 px-4 py-2 flex flex-col justify-center gap-1 group/input">
-                        <span className="text-[9px] font-bold uppercase tracking-[0.2em] text-accent opacity-70">Location</span>
-                        <div className="flex items-center gap-3">
-                            <MapPin className="w-4 h-4 text-primary opacity-40 group-hover/input:opacity-100 transition-opacity" strokeWidth={1.5} />
-                            <input
-                                type="text"
-                                value={location}
-                                onChange={(e) => setLocation(e.target.value)}
-                                placeholder="Where in Bangkok?"
-                                className="w-full bg-transparent text-sm font-medium text-text-primary placeholder:text-text-muted outline-none"
-                            />
+                    {/* Price Range */}
+                    <div className="px-6 py-5">
+                        <div className="flex items-center gap-2 mb-1.5">
+                            <Banknote className="w-3.5 h-3.5 text-primary" strokeWidth={2.5} />
+                            <span className="text-[9px] font-black uppercase tracking-[0.25em] text-text-secondary">Budget</span>
                         </div>
+                        <select
+                            value={priceRange}
+                            onChange={(e) => setPriceRange(e.target.value)}
+                            className="w-full bg-transparent text-sm font-semibold text-text-primary outline-none cursor-pointer appearance-none"
+                        >
+                            {PRICE_OPTIONS[listingType].map((opt) => (
+                                <option key={opt.value} value={opt.value}>{opt.label}</option>
+                            ))}
+                        </select>
                     </div>
+                </div>
 
-                    {/* Horizontal Divider - Desktop Only */}
-                    <div className="hidden md:block w-px bg-border-light my-2"></div>
-
-                    {/* Price Range Selection */}
-                    <div className="flex-1 px-4 py-2 flex flex-col justify-center gap-1 group/input">
-                        <span className="text-[9px] font-bold uppercase tracking-[0.2em] text-accent opacity-70">Price Range</span>
-                        <div className="flex items-center gap-3">
-                            <DollarSign className="w-4 h-4 text-primary opacity-60 group-hover/input:opacity-100 transition-opacity" strokeWidth={1.5} />
-                            <select
-                                value={`${priceRange.min}-${priceRange.max}`}
-                                onChange={(e) => {
-                                    const [min, max] = e.target.value.split('-').map(Number);
-                                    setPriceRange({ min, max });
-                                }}
-                                className="w-full bg-transparent text-sm font-semibold text-text-primary outline-none cursor-pointer appearance-none"
-                            >
-                                {listingType === 'rent' ? (
-                                    <>
-                                        <option value="0-20000">Under ฿20k/mo</option>
-                                        <option value="20000-40000">฿20k - ฿40k/mo</option>
-                                        <option value="40000-60000">฿40k - ฿60k/mo</option>
-                                        <option value="60000-999999">฿60k+/mo</option>
-                                    </>
-                                ) : (
-                                    <>
-                                        <option value="0-3000000">Under ฿3M</option>
-                                        <option value="3000000-8000000">฿3M - ฿8M</option>
-                                        <option value="8000000-15000000">฿8M - ฿15M</option>
-                                        <option value="15000000-999999999">฿15M+</option>
-                                    </>
-                                )}
-                            </select>
-                        </div>
-                    </div>
-
-                    {/* Search Action */}
+                {/* Search Footer */}
+                <div className="px-6 py-4 bg-background-subtle flex items-center justify-between border-t border-border">
+                    <p className="text-[10px] text-text-muted font-medium">
+                        <span className="font-bold text-text-secondary">200+</span> properties available in Bangkok
+                    </p>
                     <button
                         onClick={handleSearch}
-                        className="bg-primary text-white p-4 md:px-8 rounded-2xl font-bold text-[10px] uppercase tracking-[0.25em] flex items-center justify-center gap-3 hover:bg-primary-light transition-all shadow-button active:scale-[0.98]"
+                        className="bg-primary text-white px-8 py-3 rounded-xl font-black text-[10px] uppercase tracking-[0.3em] flex items-center gap-2.5 hover:bg-primary/90 transition-all active:scale-[0.98] shadow-button"
                     >
-                        <Search className="w-4 h-4" strokeWidth={2.5} />
-                        <span className="md:hidden lg:inline">Find Property</span>
-                        <ArrowRight className="hidden lg:block w-4 h-4 opacity-40 group-hover/search:opacity-100 transition-all group-hover:translate-x-1" />
+                        <Search className="w-3.5 h-3.5" strokeWidth={3} />
+                        Search
                     </button>
                 </div>
-            </div>
-
-            {/* Subtle Trust Line */}
-            <div className="flex items-center justify-center gap-10 mt-6 animate-fade-in [animation-delay:800ms]">
-                {[
-                    { label: 'Properties', value: '200+' },
-                    { label: 'Happy Clients', value: '1.2k' },
-                    { label: 'Experience', value: '15 Yrs' }
-                ].map((stat, i) => (
-                    <div key={i} className="flex flex-col items-center">
-                        <span className="text-xs font-display italic text-primary">{stat.value}</span>
-                        <span className="text-[7px] font-sans font-bold uppercase tracking-[0.3em] text-accent-rich opacity-60 leading-none mt-1">{stat.label}</span>
-                    </div>
-                ))}
             </div>
         </div>
     );
