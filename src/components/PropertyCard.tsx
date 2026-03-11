@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Bed, Bath, Maximize, Heart } from 'lucide-react';
+import { Bed, Bath, Maximize, Heart, MapPin } from 'lucide-react';
 import type { Property } from '../types';
 
 interface PropertyCardProps {
