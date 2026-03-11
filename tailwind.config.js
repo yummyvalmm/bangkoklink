@@ -19,19 +19,19 @@ export default {
                     rich: '#B8860B',    // Dark Goldenrod
                 },
                 background: {
-                    DEFAULT: '#FDFDFB',  // Very soft warm white
+                    DEFAULT: '#FFFFFF',  // Pure white for maximum contrast
                     card: '#FFFFFF',     // Pure white
-                    subtle: '#F8F8F7',   // Subtle section color
-                    dark: '#0A0F1D',     // Deepest navy for footer/dark UI
+                    subtle: '#F9FAFB',   // Sharper subtle section color
+                    dark: '#0A0F1D',     // Deepest navy
                 },
                 text: {
                     primary: '#111827',    // Near black
-                    secondary: '#4B5563',  // Dark grey
-                    muted: '#9CA3AF',      // Muted grey
+                    secondary: '#374151',  // Darker grey for better legibility
+                    muted: '#6B7280',      // Deepened muted grey
                 },
                 border: {
-                    light: '#F3F4F6',
-                    DEFAULT: '#E5E7EB',
+                    light: '#E5E7EB',      // Defined light border
+                    DEFAULT: '#D1D5DB',    // Standard border
                 },
             },
             fontFamily: {
