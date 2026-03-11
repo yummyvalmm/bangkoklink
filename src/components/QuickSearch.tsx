@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Search, MapPin, BedDouble, Banknote } from 'lucide-react';
+import { Search, MapPin, BedDouble, Banknote, ChevronDown } from 'lucide-react';
 
 interface QuickSearchProps {
     onSearch?: (filters: SearchFilters) => void;
@@ -21,14 +21,14 @@ const PROPERTY_TYPES = ['Any Type', 'Condo', 'Villa', 'Apartment', 'Townhouse', 
 
 const PRICE_OPTIONS = {
     rent: [
-        { label: 'Any Price', value: 'any' },
+        { label: 'Any Budget', value: 'any' },
         { label: 'Under ฿20k/mo', value: '0-20000' },
         { label: '฿20k – ฿40k/mo', value: '20000-40000' },
         { label: '฿40k – ฿80k/mo', value: '40000-80000' },
         { label: '฿80k+/mo', value: '80000-999999' },
     ],
     buy: [
-        { label: 'Any Price', value: 'any' },
+        { label: 'Any Budget', value: 'any' },
         { label: 'Under ฿3M', value: '0-3000000' },
         { label: '฿3M – ฿8M', value: '3000000-8000000' },
         { label: '฿8M – ฿20M', value: '8000000-20000000' },
@@ -49,9 +49,6 @@ const QuickSearch = ({ onSearch }: QuickSearchProps) => {
 
     const handleSearch = () => {
         if (onSearch) {
-            const [min, max] = priceRange === 'any'
-                ? [0, 999999999]
-                : priceRange.split('-').map(Number);
             onSearch({ location, listingType, propertyType, priceRange });
         }
         setShowSuggestions(false);
@@ -63,8 +60,8 @@ const QuickSearch = ({ onSearch }: QuickSearchProps) => {
 
     return (
         <div className="w-full max-w-6xl mx-auto">
-            {/* Main Card */}
-            <div className="bg-white rounded-2xl border border-border shadow-card overflow-hidden">
+            <div className="bg-white rounded-2xl border border-border shadow-card overflow-visible">
+
                 {/* Tab Bar */}
                 <div className="flex border-b border-border">
                     {(['rent', 'buy'] as const).map((type) => (
@@ -74,7 +71,7 @@ const QuickSearch = ({ onSearch }: QuickSearchProps) => {
                             className={`flex-1 py-4 text-[10px] font-black uppercase tracking-[0.3em] transition-all border-b-2 -mb-px ${
                                 listingType === type
                                     ? 'border-primary text-primary bg-primary/5'
-                                    : 'border-transparent text-text-secondary hover:text-text-primary bg-transparent'
+                                    : 'border-transparent text-text-secondary hover:text-text-primary bg-transparent hover:bg-background-subtle'
                             }`}
                         >
                             {type === 'rent' ? 'For Rent' : 'For Sale'}
@@ -82,33 +79,37 @@ const QuickSearch = ({ onSearch }: QuickSearchProps) => {
                     ))}
                 </div>
 
-                {/* Inputs Row */}
-                <div className="grid grid-cols-1 md:grid-cols-3 divide-y md:divide-y-0 md:divide-x divide-border">
+                {/* Input Fields */}
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-4 p-6">
+
                     {/* Location */}
-                    <div className="relative px-6 py-5">
-                        <div className="flex items-center gap-2 mb-1.5">
-                            <MapPin className="w-3.5 h-3.5 text-primary" strokeWidth={2.5} />
-                            <span className="text-[9px] font-black uppercase tracking-[0.25em] text-text-secondary">Location</span>
+                    <div className="relative">
+                        <label className="flex items-center gap-1.5 text-[9px] font-black uppercase tracking-[0.25em] text-text-secondary mb-2">
+                            <MapPin className="w-3 h-3 text-primary" strokeWidth={2.5} />
+                            Location
+                        </label>
+                        <div className="relative group">
+                            <input
+                                type="text"
+                                value={location}
+                                onChange={(e) => { setLocation(e.target.value); setShowSuggestions(true); }}
+                                onFocus={() => setShowSuggestions(true)}
+                                onBlur={() => setTimeout(() => setShowSuggestions(false), 150)}
+                                placeholder="Search Bangkok area…"
+                                className="w-full bg-background-subtle border border-border rounded-xl px-4 py-3 text-sm font-semibold text-text-primary placeholder:text-text-muted placeholder:font-normal outline-none focus:border-primary focus:bg-white focus:ring-2 focus:ring-primary/10 transition-all cursor-text"
+                            />
                         </div>
-                        <input
-                            type="text"
-                            value={location}
-                            onChange={(e) => { setLocation(e.target.value); setShowSuggestions(true); }}
-                            onFocus={() => setShowSuggestions(true)}
-                            onBlur={() => setTimeout(() => setShowSuggestions(false), 150)}
-                            placeholder="Search Bangkok area…"
-                            className="w-full bg-transparent text-sm font-semibold text-text-primary placeholder:text-text-muted placeholder:font-normal outline-none"
-                        />
-                        {/* Location Autocomplete */}
+
+                        {/* Autocomplete Dropdown */}
                         {showSuggestions && filteredLocations.length > 0 && (
-                            <div className="absolute left-0 right-0 top-full mt-1 bg-white border border-border rounded-xl shadow-card-hover z-50 overflow-hidden">
+                            <div className="absolute left-0 right-0 top-full mt-2 bg-white border border-border rounded-xl shadow-card-hover z-50 overflow-hidden">
                                 {filteredLocations.map((loc) => (
                                     <button
                                         key={loc}
                                         onMouseDown={() => { setLocation(loc); setShowSuggestions(false); }}
-                                        className="w-full text-left px-5 py-3 text-sm font-medium text-text-secondary hover:bg-background-subtle hover:text-primary transition-colors flex items-center gap-2"
+                                        className="w-full text-left px-4 py-3 text-sm font-medium text-text-secondary hover:bg-background-subtle hover:text-primary transition-colors flex items-center gap-2.5"
                                     >
-                                        <MapPin className="w-3.5 h-3.5 text-accent opacity-60" strokeWidth={2} />
+                                        <MapPin className="w-3.5 h-3.5 text-accent opacity-60 shrink-0" strokeWidth={2} />
                                         {loc}
                                     </button>
                                 ))}
@@ -117,51 +118,57 @@ const QuickSearch = ({ onSearch }: QuickSearchProps) => {
                     </div>
 
                     {/* Property Type */}
-                    <div className="px-6 py-5">
-                        <div className="flex items-center gap-2 mb-1.5">
-                            <BedDouble className="w-3.5 h-3.5 text-primary" strokeWidth={2.5} />
-                            <span className="text-[9px] font-black uppercase tracking-[0.25em] text-text-secondary">Property Type</span>
+                    <div>
+                        <label className="flex items-center gap-1.5 text-[9px] font-black uppercase tracking-[0.25em] text-text-secondary mb-2">
+                            <BedDouble className="w-3 h-3 text-primary" strokeWidth={2.5} />
+                            Property Type
+                        </label>
+                        <div className="relative">
+                            <select
+                                value={propertyType}
+                                onChange={(e) => setPropertyType(e.target.value)}
+                                className="w-full bg-background-subtle border border-border rounded-xl px-4 py-3 pr-10 text-sm font-semibold text-text-primary outline-none cursor-pointer appearance-none focus:border-primary focus:bg-white focus:ring-2 focus:ring-primary/10 transition-all hover:border-primary/40"
+                            >
+                                {PROPERTY_TYPES.map((t) => (
+                                    <option key={t} value={t}>{t}</option>
+                                ))}
+                            </select>
+                            <ChevronDown className="absolute right-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-text-muted pointer-events-none" strokeWidth={2.5} />
                         </div>
-                        <select
-                            value={propertyType}
-                            onChange={(e) => setPropertyType(e.target.value)}
-                            className="w-full bg-transparent text-sm font-semibold text-text-primary outline-none cursor-pointer appearance-none"
-                        >
-                            {PROPERTY_TYPES.map((t) => (
-                                <option key={t} value={t}>{t}</option>
-                            ))}
-                        </select>
                     </div>
 
                     {/* Price Range */}
-                    <div className="px-6 py-5">
-                        <div className="flex items-center gap-2 mb-1.5">
-                            <Banknote className="w-3.5 h-3.5 text-primary" strokeWidth={2.5} />
-                            <span className="text-[9px] font-black uppercase tracking-[0.25em] text-text-secondary">Budget</span>
+                    <div>
+                        <label className="flex items-center gap-1.5 text-[9px] font-black uppercase tracking-[0.25em] text-text-secondary mb-2">
+                            <Banknote className="w-3 h-3 text-primary" strokeWidth={2.5} />
+                            Budget
+                        </label>
+                        <div className="relative">
+                            <select
+                                value={priceRange}
+                                onChange={(e) => setPriceRange(e.target.value)}
+                                className="w-full bg-background-subtle border border-border rounded-xl px-4 py-3 pr-10 text-sm font-semibold text-text-primary outline-none cursor-pointer appearance-none focus:border-primary focus:bg-white focus:ring-2 focus:ring-primary/10 transition-all hover:border-primary/40"
+                            >
+                                {PRICE_OPTIONS[listingType].map((opt) => (
+                                    <option key={opt.value} value={opt.value}>{opt.label}</option>
+                                ))}
+                            </select>
+                            <ChevronDown className="absolute right-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-text-muted pointer-events-none" strokeWidth={2.5} />
                         </div>
-                        <select
-                            value={priceRange}
-                            onChange={(e) => setPriceRange(e.target.value)}
-                            className="w-full bg-transparent text-sm font-semibold text-text-primary outline-none cursor-pointer appearance-none"
-                        >
-                            {PRICE_OPTIONS[listingType].map((opt) => (
-                                <option key={opt.value} value={opt.value}>{opt.label}</option>
-                            ))}
-                        </select>
                     </div>
                 </div>
 
-                {/* Search Footer */}
-                <div className="px-6 py-4 bg-background-subtle flex items-center justify-between border-t border-border">
-                    <p className="text-[10px] text-text-muted font-medium">
+                {/* Footer / Search Button */}
+                <div className="px-6 pb-6 flex items-center justify-between">
+                    <p className="text-[10px] text-text-muted font-medium hidden sm:block">
                         <span className="font-bold text-text-secondary">200+</span> properties available in Bangkok
                     </p>
                     <button
                         onClick={handleSearch}
-                        className="bg-primary text-white px-8 py-3 rounded-xl font-black text-[10px] uppercase tracking-[0.3em] flex items-center gap-2.5 hover:bg-primary/90 transition-all active:scale-[0.98] shadow-button"
+                        className="w-full sm:w-auto bg-primary text-white px-10 py-3.5 rounded-xl font-black text-[10px] uppercase tracking-[0.3em] flex items-center justify-center gap-2.5 hover:bg-primary/90 active:scale-[0.98] transition-all shadow-button"
                     >
                         <Search className="w-3.5 h-3.5" strokeWidth={3} />
-                        Search
+                        Search Properties
                     </button>
                 </div>
             </div>
