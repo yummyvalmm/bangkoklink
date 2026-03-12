@@ -18,7 +18,6 @@ const Hero = () => {
                             <h1 className="text-4xl md:text-7xl lg:text-8xl font-sans font-black text-text-primary leading-[0.95] tracking-[-0.04em] mb-6 md:mb-10 animate-fade-in [animation-delay:400ms]">
                                 FIND YOUR <br />
                                 PERFECT HOME <br />
-                                IN BANGKOK
                             </h1>
                             <p className="text-lg md:text-2xl text-text-secondary max-w-2xl font-light leading-relaxed mb-8 md:mb-12 animate-fade-in [animation-delay:600ms]">
                                 Discover exceptional properties in Bangkok that match your lifestyle and exceed your expectations.
