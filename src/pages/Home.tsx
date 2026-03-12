@@ -23,7 +23,7 @@ const Home = () => {
                         <p className="text-text-secondary text-sm font-medium">Handpicked luxury properties across Bangkok</p>
                     </div>
 
-                    <div className="flex flex-col gap-3">
+                    <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
                         {properties.map((property) => (
                             <PropertyCard key={property.id} property={property} />
                         ))}
