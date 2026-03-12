@@ -1,11 +1,10 @@
 import Hero from '../components/Hero';
 import PropertyCard from '../components/PropertyCard';
-import AgentCard from '../components/AgentCard';
 import Contact from '../components/Contact';
 import HowItWorks from '../components/HowItWorks';
 import Testimonials from '../components/Testimonials';
 import FinalCTA from '../components/FinalCTA';
-import { properties, agents } from '../data';
+import { properties } from '../data';
 
 const Home = () => {
     return (
@@ -70,24 +69,6 @@ const Home = () => {
                                 </div>
                             </div>
                         </div>
-                    </div>
-                </div>
-            </section>
-
-            {/* Agents Section */}
-            <section id="agents" className="py-16">
-                <div className="max-w-7xl mx-auto px-6">
-                    <div className="text-center mb-12">
-                        <h2 className="text-3xl md:text-4xl font-display font-light mb-4 text-text-primary uppercase tracking-[0.2em]">Meet Our Agents</h2>
-                        <p className="text-text-secondary text-lg">
-                            Expert professionals dedicated to your success
-                        </p>
-                    </div>
-
-                    <div className="grid md:grid-cols-3 gap-8">
-                        {agents.map((agent) => (
-                            <AgentCard key={agent.id} agent={agent} />
-                        ))}
                     </div>
                 </div>
             </section>
