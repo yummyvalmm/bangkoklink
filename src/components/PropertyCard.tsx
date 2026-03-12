@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Bed, Bath, Maximize, Heart, MapPin } from 'lucide-react';
+import { Bed, Bath, Maximize, Heart, MapPin, ArrowUpRight } from 'lucide-react';
 import type { Property } from '../types';
 
 interface PropertyCardProps {
@@ -11,85 +11,75 @@ const PropertyCard = ({ property }: PropertyCardProps) => {
     const [isSaved, setIsSaved] = useState(false);
 
     const handleSave = (e: React.MouseEvent) => {
-        e.preventDefault(); // Prevent Link navigation
+        e.preventDefault();
         setIsSaved(!isSaved);
     };
 
     return (
         <Link
             to={`/properties/${property.id}`}
-            className={`group block bg-white rounded-2xl overflow-hidden transition-all duration-500 shadow-card lg:hover:shadow-card-hover border border-border-light/50 lg:hover:border-accent/20 relative ${property.status === 'New Release'
-                ? 'ring-1 ring-accent/10 lg:hover:ring-accent/30'
-                : ''
-                }`}
+            className="group flex gap-4 bg-white rounded-2xl overflow-hidden border border-border-light/60 lg:hover:border-primary/20 lg:hover:shadow-card transition-all duration-300 p-3 items-center active:scale-[0.99]"
         >
-            {/* Image Container */}
-            <div className="relative h-60 md:h-72 overflow-hidden">
+            {/* Thumbnail */}
+            <div className="relative w-28 h-24 md:w-36 md:h-28 rounded-xl overflow-hidden shrink-0">
                 <img
                     src={property.image}
                     alt={property.title}
-                    className="w-full h-full object-cover lg:group-hover:scale-105 transition-transform duration-1000"
+                    className="w-full h-full object-cover lg:group-hover:scale-105 transition-transform duration-700"
                 />
+                {/* Status badge */}
+                <span className={`absolute top-2 left-2 px-2 py-0.5 rounded-full text-[8px] font-black uppercase tracking-wider ${
+                    property.status === 'For Sale' ? 'bg-white/90 text-text-primary' :
+                    property.status === 'New Release' ? 'bg-primary text-white' :
+                    'bg-accent text-white'
+                }`}>
+                    {property.status}
+                </span>
+            </div>
 
-                {/* Status Badge & Save Button */}
-                <div className="absolute top-5 left-5 right-5 flex justify-between items-start z-10">
-                    <span className={`px-4 py-1.5 rounded-full text-[10px] font-bold tracking-widest uppercase shadow-md backdrop-blur-md ${property.status === 'For Sale' ? 'bg-white/90 text-text-primary' :
-                        property.status === 'New Release' ? 'bg-primary text-white' :
-                            'bg-accent text-secondary'
-                        }`}>
-                        {property.status}
+            {/* Info */}
+            <div className="flex-1 min-w-0 py-1">
+                <h3 className="text-sm font-black text-text-primary tracking-tight truncate lg:group-hover:text-primary transition-colors">
+                    {property.title}
+                </h3>
+                <p className="flex items-center gap-1 text-[10px] font-bold uppercase tracking-[0.15em] text-text-muted mt-0.5">
+                    <MapPin className="w-3 h-3 shrink-0" strokeWidth={2.5} />
+                    <span className="truncate">{property.location}</span>
+                </p>
+
+                {/* Stats row */}
+                <div className="flex items-center gap-3 mt-2">
+                    <span className="flex items-center gap-1 text-[10px] font-medium text-text-secondary">
+                        <Bed className="w-3.5 h-3.5 text-accent" strokeWidth={1.5} />
+                        {property.bedrooms}
                     </span>
-
-                    <button
-                        onClick={handleSave}
-                        className={`p-2.5 rounded-full backdrop-blur-md shadow-md transition-all duration-300 hover:scale-110 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-transparent ${isSaved
-                            ? 'bg-white text-rose-500'
-                            : 'bg-white/70 text-text-primary lg:hover:bg-white active:bg-white'
-                            }`}
-                        aria-label={isSaved ? "Remove from saved properties" : "Save property"}
-                    >
-                        <Heart className="w-4 h-4" fill={isSaved ? "currentColor" : "none"} strokeWidth={2} />
-                    </button>
-                </div>
-
-                {/* Hover Overlay - Always visible on mobile, hover on desktop */}
-                <div className="absolute inset-0 bg-gradient-to-t from-primary/60 via-primary/20 to-transparent lg:bg-primary/20 opacity-100 lg:opacity-0 lg:group-hover:opacity-100 transition-opacity duration-500 flex items-end lg:items-center justify-center pb-6 lg:pb-0 pointer-events-none">
-                    <span className="bg-white/95 backdrop-blur-md text-primary px-6 py-2.5 rounded-full text-sm font-bold shadow-xl lg:translate-y-4 lg:group-hover:translate-y-0 transition-transform duration-500 border border-white/20">
-                        View Details
+                    <span className="flex items-center gap-1 text-[10px] font-medium text-text-secondary">
+                        <Bath className="w-3.5 h-3.5 text-accent" strokeWidth={1.5} />
+                        {property.bathrooms}
+                    </span>
+                    <span className="flex items-center gap-1 text-[10px] font-medium text-text-secondary">
+                        <Maximize className="w-3.5 h-3.5 text-accent" strokeWidth={1.5} />
+                        {property.sqft.toLocaleString()} sqft
                     </span>
                 </div>
             </div>
 
-            {/* Content Container */}
-            <div className="p-8 space-y-5">
-                {/* Title & Location */}
-                <div>
-                    <h3 className="text-2xl font-sans font-bold tracking-tight mb-2 text-text-primary lg:group-hover:text-primary transition-colors">
-                        {property.title}
-                    </h3>
-                    <p className="text-text-secondary text-[10px] font-bold uppercase tracking-[0.2em] flex items-center gap-2 opacity-60">
-                        <MapPin className="w-3 h-3" strokeWidth={2.5} />
-                        {property.location}
-                    </p>
-                </div>
-
-                {/* Price */}
-                <div className="text-3xl font-black text-primary font-sans tracking-[-0.03em]">{property.price}</div>
-
-                {/* Features */}
-                <div className="flex items-center gap-6 pt-6 border-t border-border-light/60">
-                    <div className="flex items-center gap-2.5 text-xs font-medium text-text-secondary">
-                        <Bed className="w-4 h-4 text-accent" strokeWidth={1.5} />
-                        <span className="tracking-wide">{property.bedrooms} Beds</span>
-                    </div>
-                    <div className="flex items-center gap-2.5 text-xs font-medium text-text-secondary">
-                        <Bath className="w-4 h-4 text-accent" strokeWidth={1.5} />
-                        <span className="tracking-wide">{property.bathrooms} Baths</span>
-                    </div>
-                    <div className="flex items-center gap-2.5 text-xs font-medium text-text-secondary">
-                        <Maximize className="w-4 h-4 text-accent" strokeWidth={1.5} />
-                        <span className="tracking-wide">{property.sqft.toLocaleString()} Sqft</span>
-                    </div>
+            {/* Price + Actions */}
+            <div className="shrink-0 flex flex-col items-end gap-2 pr-1">
+                <span className="text-base font-black text-primary tracking-tight leading-none">{property.price}</span>
+                <div className="flex items-center gap-1.5">
+                    <button
+                        onClick={handleSave}
+                        className={`p-1.5 rounded-full transition-all duration-200 active:scale-90 ${
+                            isSaved ? 'bg-rose-50 text-rose-500' : 'text-text-muted lg:hover:text-rose-400'
+                        }`}
+                        aria-label={isSaved ? 'Remove from saved' : 'Save property'}
+                    >
+                        <Heart className="w-3.5 h-3.5" fill={isSaved ? 'currentColor' : 'none'} strokeWidth={2} />
+                    </button>
+                    <span className="w-7 h-7 rounded-full bg-primary/5 flex items-center justify-center lg:group-hover:bg-primary lg:group-hover:text-white transition-all duration-300">
+                        <ArrowUpRight className="w-3.5 h-3.5 text-primary lg:group-hover:text-white transition-colors duration-300" strokeWidth={2.5} />
+                    </span>
                 </div>
             </div>
         </Link>

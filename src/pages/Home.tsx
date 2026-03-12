@@ -16,16 +16,14 @@ const Home = () => {
             <HowItWorks />
 
             {/* Featured Properties Section */}
-            <section id="properties" className="py-16 bg-background">
+            <section id="properties" className="py-12 bg-background">
                 <div className="max-w-7xl mx-auto px-6">
-                    <div className="text-center mb-12">
-                        <h2 className="text-3xl md:text-4xl font-display font-light mb-4 text-text-primary uppercase tracking-[0.2em]">Featured Properties</h2>
-                        <p className="text-text-secondary text-lg">
-                            Discover our handpicked selection of luxury properties
-                        </p>
+                    <div className="mb-8">
+                        <h2 className="text-2xl md:text-3xl font-sans font-black text-text-primary uppercase tracking-[-0.02em] mb-1">Featured Properties</h2>
+                        <p className="text-text-secondary text-sm font-medium">Handpicked luxury properties across Bangkok</p>
                     </div>
 
-                    <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <div className="flex flex-col gap-3">
                         {properties.map((property) => (
                             <PropertyCard key={property.id} property={property} />
                         ))}
